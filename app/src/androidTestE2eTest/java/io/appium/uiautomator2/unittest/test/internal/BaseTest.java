@@ -24,6 +24,7 @@ import androidx.test.uiautomator.Configurator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -36,7 +37,6 @@ import java.io.IOException;
 
 import io.appium.uiautomator2.model.By;
 import io.appium.uiautomator2.server.ServerInstrumentation;
-import io.appium.uiautomator2.unittest.test.Config;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -94,10 +94,18 @@ public abstract class BaseTest {
     }
 
     @Before
+    public void beforeTest() {
+    }
+
+    @After
+    public void afterTest() {
+    }
+
+    @Before
     public void launchAUT() throws JSONException {
         dismissSystemAlert();
-        startActivity(Config.APP_NAME);
-        waitForElement(By.accessibilityId("Accessibility"));
+//        startActivity(Config.APP_NAME, 2);
+//        waitForElement(By.accessibilityId("Accessibility"));
     }
 
     protected void dismissSystemAlert() {
@@ -119,8 +127,16 @@ public abstract class BaseTest {
         }
     }
 
-    protected void startActivity(String activity) throws JSONException {
-        TestUtils.startActivity(ctx, activity);
+    protected void startActivity(String packageName, String activity) throws JSONException {
+        TestUtils.startActivity(ctx, packageName, activity);
+    }
+
+    protected void startActivity(String packageName, String activity, int displayId) throws JSONException {
+        TestUtils.startActivity(ctx, packageName, activity, displayId);
+    }
+
+    protected void startActivityByUserId(String packageName, String activity, int userId) throws JSONException {
+        TestUtils.startActivityByUserId(ctx, packageName, activity, userId);
     }
 
     protected void clickAndWaitForStaleness(String elementId) throws JSONException {

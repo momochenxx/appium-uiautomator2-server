@@ -22,7 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.appium.uiautomator2.model.By;
-import io.appium.uiautomator2.unittest.test.Config;
+import io.appium.uiautomator2.unittest.test.internal.Config;
 import io.appium.uiautomator2.unittest.test.internal.Client;
 import io.appium.uiautomator2.unittest.test.internal.Response;
 import io.appium.uiautomator2.unittest.test.internal.TestUtils;

@@ -27,7 +27,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 import io.appium.uiautomator2.common.exceptions.UiAutomator2Exception;
-import io.appium.uiautomator2.unittest.test.Config;
 
 import static android.os.SystemClock.elapsedRealtime;
 import static java.util.concurrent.TimeUnit.SECONDS;

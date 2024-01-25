@@ -18,8 +18,6 @@ package io.appium.uiautomator2.unittest.test.internal;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import io.appium.uiautomator2.unittest.test.Config;
-
 public class WebDriverSession {
     private WebDriverSession() {}
 

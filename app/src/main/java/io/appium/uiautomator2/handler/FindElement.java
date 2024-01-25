@@ -16,6 +16,10 @@
 
 package io.appium.uiautomator2.handler;
 
+import static io.appium.uiautomator2.utils.ElementLocationHelpers.findElement;
+import static io.appium.uiautomator2.utils.ModelUtils.toModel;
+import static io.appium.uiautomator2.utils.StringHelpers.isBlank;
+
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
 import io.appium.uiautomator2.common.exceptions.ElementNotFoundException;
@@ -30,10 +34,6 @@ import io.appium.uiautomator2.model.ElementsCache;
 import io.appium.uiautomator2.model.api.FindElementModel;
 import io.appium.uiautomator2.model.internal.ElementsLookupStrategy;
 import io.appium.uiautomator2.utils.Logger;
-
-import static io.appium.uiautomator2.utils.ElementLocationHelpers.findElement;
-import static io.appium.uiautomator2.utils.ModelUtils.toModel;
-import static io.appium.uiautomator2.utils.StringHelpers.isBlank;
 
 public class FindElement extends SafeRequestHandler {
 

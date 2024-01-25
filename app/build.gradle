@@ -14,10 +14,19 @@ apply plugin: 'com.android.application'
 apply plugin: 'de.mobilej.unmock'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file("..\\platform.jks")
+            storePassword "123456"
+            keyPassword "123456"
+            keyAlias "platform"
+        }
+    }
+
     compileSdk 34
     defaultConfig {
         applicationId 'io.appium.uiautomator2'
-        minSdkVersion 21
+        minSdkVersion 30
         targetSdkVersion 34
         versionCode 156
         archivesBaseName = 'appium-uiautomator2'
@@ -29,6 +38,7 @@ android {
     }
     buildTypes {
         debug {
+            signingConfig signingConfigs.debug
             debuggable true
         }
         customDebuggableBuildType {
@@ -88,7 +98,9 @@ unMock {
 
 dependencies {
     // https://download.eclipse.org/oomph/archive/reports/download.eclipse.org/releases/2021-09/index/org.eclipse.wst.xml.xpath2.processor_2.1.101.v201903222120.html
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+//    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    compileOnly(fileTree(file("libs/framework.jar")))
+    implementation(fileTree(file("libs/org.eclipse.wst.xml.xpath2.processor_2.1.101.v201903222120.jar")))
     implementation 'androidx.test.uiautomator:uiautomator:2.3.0-beta01'
     implementation 'androidx.test:core:1.5.0'
     implementation 'androidx.test:runner:1.5.2'
@@ -113,26 +125,26 @@ dependencies {
     androidTestImplementation 'com.squareup.okhttp:okhttp:2.7.5'
 }
 
-task installAUT(type: Exec) {
-    group = 'test'
-    description = 'Install app under test'
-    doFirst {
-        println('Install AUT')
-        def adb = "$System.env.ANDROID_HOME/platform-tools/adb"
-        def apk = file('../node_modules/android-apidemos/apks/ApiDemos-debug.apk')
-        def sdkVersion = "$adb shell getprop ro.build.version.sdk".execute().text.trim()
-        println "Device SDK version: $sdkVersion"
-        /* This seems weird but it is what it is: https://github.com/wix/detox/issues/274 */
-        def command = sdkVersion.toInteger() < 23 ? "$adb install -r $apk" : "$adb install -r -g $apk"
-        println "Execute command: $command"
-        commandLine command.split(' ')
-    }
-}
-
-afterEvaluate {
-    tasks.each { task ->
-        if (task.name.startsWith('connectedE2eTestDebugAndroidTest')) {
-            task.dependsOn installAUT
-        }
-    }
-}
+//task installAUT(type: Exec) {
+//    group = 'test'
+//    description = 'Install app under test'
+//    doFirst {
+//        println('Install AUT')
+//        def adb = "$System.env.ANDROID_HOME/platform-tools/adb"
+//        def apk = file('../node_modules/android-apidemos/apks/ApiDemos-debug.apk')
+//        def sdkVersion = "$adb shell getprop ro.build.version.sdk".execute().text.trim()
+//        println "Device SDK version: $sdkVersion"
+//        /* This seems weird but it is what it is: https://github.com/wix/detox/issues/274 */
+//        def command = sdkVersion.toInteger() < 23 ? "$adb install -r $apk" : "$adb install -r -g $apk"
+//        println "Execute command: $command"
+//        commandLine command.split(' ')
+//    }
+//}
+//
+//afterEvaluate {
+//    tasks.each { task ->
+//        if (task.name.startsWith('connectedE2eTestDebugAndroidTest')) {
+//            task.dependsOn installAUT
+//        }
+//    }
+//}
